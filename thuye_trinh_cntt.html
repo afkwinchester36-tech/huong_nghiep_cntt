@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Khám Phá & Định Hướng Ngành CNTT - Báo Cáo Chuyên Sâu</title>
+    <style>
+        :root {
+            --bg-primary: #090d16;
+            --bg-secondary: #111827;
+            --bg-card: #1f2937;
+            --accent: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.3);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border: #374151;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Header Thuyết Trình */
+        header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            border-bottom: 2px solid var(--border);
+            padding: 24px 40px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            color: var(--accent);
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            padding: 0 20px;
+            gap: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 16px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .tab-btn.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+            background: rgba(56, 189, 248, 0.05);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            flex: 1;
+            width: 100%;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards & Grids */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px var(--accent-glow);
+            border-color: var(--accent);
+        }
+
+        .card h3 {
+            color: var(--accent);
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .tag {
+            background: #0f172a;
+            color: var(--accent);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        /* Detail Tables / Lists */
+        .info-box {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 24px;
+        }
+
+        .info-box h4 {
+            color: var(--accent);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        ul.styled-list {
+            margin-left: 20px;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        ul.styled-list li strong {
+            color: var(--text-main);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 40px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.6rem; }
+            .nav-tabs { flex-wrap: wrap; }
+            .tab-btn { padding: 12px 16px; font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>BÁO CÁO CHUYÊN SÂU: NGÀNH CÔNG NGHỆ THÔNG TIN</h1>
+        <p>Phân tích toàn diện thị trường, định hướng chuyên sâu, môn học cốt lõi & lộ trình xét tuyển Đại học</p>
+    </header>
+
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('market', event)">1. Thị Trường & Tầm Nhìn</button>
+        <button class="tab-btn" onclick="switchTab('branches', event)">2. Các Nhánh Chuyên Sâu & Môn Học</button>
+        <button class="tab-btn" onclick="switchTab('skills', event)">3. Kỹ Năng Nền Tảng</button>
+        <button class="tab-btn" onclick="switchTab('university', event)">4. Cơ Sở Đào Tạo & Xét Tuyển</button>
+    </div>
+
+    <div class="container">
+
+        <!-- TAB 1: THỊ TRƯỜNG & TẦM NHÌN -->
+        <div id="market" class="tab-content active">
+            <div class="info-box">
+                <h4>Tổng Quan Ngành Công Nghệ Thông Tin (IT)</h4>
+                <p>CNTT là ngành sử dụng máy tính, mạng internet, phần mềm và hệ thống thông tin để truyền tải, lưu trữ, xử lý, bảo mật và quản lý thông tin. Trong kỷ nguyên số hóa và trí tuệ nhân tạo (AI), CNTT đóng vai trò là "xương sống" vận hành mọi doanh nghiệp từ tài chính, y tế, giáo dục đến thương mại điện tử.</p>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3>📈 Triển Vọng Thị Trường Lao Động</h3>
+                    <p>Nhu cầu tuyển dụng nhân lực chất lượng cao liên tục tăng trưởng mạnh mẽ với mức lương cạnh tranh hàng đầu thị trường.</p>
+                    <ul class="styled-list">
+                        <li><strong>Chuyển đổi số toàn diện:</strong> 100% doanh nghiệp hiện đại đều cần hạ tầng và phần mềm số hóa.</li>
+                        <li><strong>Thu nhập hấp dẫn:</strong> Mức lương khởi điểm (Junior) từ 10 - 18 triệu đồng/tháng và không giới hạn trần đối với kỹ sư giỏi (Senior/Lead).</li>
+                        <li><strong>Cơ hội toàn cầu:</strong> Làm việc từ xa (Remote) cho các tập đoàn đa quốc gia ngay tại Việt Nam.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🎯 Thách Thức & Yêu Cầu Thực Tế</h3>
+                    <p>Sự đào thải nhanh chóng đòi hỏi người làm công nghệ phải có tinh thần tự học không ngừng nghỉ.</p>
+                    <ul class="styled-list">
+                        <li><strong>Cập nhật liên tục:</strong> Công nghệ thay đổi từng ngày (AI, Cloud, DevOps...).</li>
+                        <li><strong>Áp lực công việc:</strong> Đòi hỏi tư duy giải quyết vấn đề dưới áp lực thời gian (Deadline dự án).</li>
+                        <li><strong>Yêu cầu ngoại ngữ:</strong> Tài liệu kỹ thuật 95% viết bằng Tiếng Anh.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: CÁC NHÁNH CHUYÊN SÂU & MÔN HỌC -->
+        <div id="branches" class="tab-content">
+            <div class="info-box">
+                <h4>Phân Tích Chi Tiết 5 Nhánh Chuyên Sâu Hàng Đầu</h4>
+                <p>Ngành CNTT rất rộng lớn. Dưới đây là 5 nhánh chuyên môn phổ biến, đòi hỏi các bộ kỹ năng và danh sách môn học chuyên ngành riêng biệt tại trường Đại học:</p>
+            </div>
+
+            <div class="grid-2">
+                <!-- Nhánh 1 -->
+                <div class="card">
+                    <h3>💻 Kỹ Thuật Phần Mềm (Software Engineering)</h3>
+                    <p>Xây dựng, phát triển và bảo trì các ứng dụng web, mobile và hệ thống phần mềm quy mô lớn.</p>
+                    <p><strong>Môn học chuyên ngành cốt lõi:</strong></p>
+                    <div class="tag-list">
+                        <span class="tag">Lập trình Hướng Đối Tượng (OOP)</span>
+                        <span class="tag">Cấu trúc Dữ liệu & Giải thuật</span>
+                        <span class="tag">Kiến trúc Phần mềm & Design Patterns</span>
+                        <span class="tag">Cơ sở Dữ liệu (SQL/NoSQL)</span>
+                        <span class="tag">Phát triển Web & Mobile App</span>
+                    </div>
+                </div>
+
+                <!-- Nhánh 2 -->
+                <div class="card">
+                    <h3>🛡️ An Toàn Thông Tin (Cybersecurity)</h3>
+                    <p>Bảo vệ hệ thống mạng, mã hóa dữ liệu, phòng chống tấn công mạng và điều tra sự cố số.</p>
+                    <p><strong>Môn học chuyên ngành cốt lõi:</strong></p>
+                    <div class="tag-list">
+                        <span class="tag">Mật mã học (Cryptography)</span>
+                        <span class="tag">An toàn Mạng máy tính</span>
+                        <span class="tag">Kiểm thử xâm nhập (Penetration Testing)</span>
+                        <span class="tag">Đảo ngược mã độc (Reverse Engineering)</span>
+                        <span class="tag">Hệ điều hành & Lập trình hệ thống (C/C++)</span>
+                    </div>
+                </div>
+
+                <!-- Nhánh 3 -->
+                <div class="card">
+                    <h3>🤖 Trí Tuệ Nhân Tạo & Khoa Học Dữ Liệu (AI & Data Science)</h3>
+                    <p>Xây dựng thuật toán học máy, phân tích dữ liệu lớn, xử lý ngôn ngữ tự nhiên và thị giác máy tính.</p>
+                    <p><strong>Môn học chuyên ngành cốt lõi:</strong></p>
+                    <div class="tag-list">
+                        <span class="tag">Đại số tuyến tính & Xác suất thống kê</span>
+                        <span class="tag">Học máy (Machine Learning)</span>
+                        <span class="tag">Học sâu (Deep Learning)</span>
+                        <span class="tag">Khai phá dữ liệu (Data Mining)</span>
+                        <span class="tag">Lập trình Python chuyên sâu</span>
+                    </div>
+                </div>
+
+                <!-- Nhánh 4 -->
+                <div class="card">
+                    <h3>🔌 Hệ Thống Nhúng & IoT (Embedded Systems)</h3>
+                    <p>Lập trình vi điều khiển, phần cứng thông minh, xe tự hành, thiết bị y tế và nhà thông minh.</p>
+                    <p><strong>Môn học chuyên ngành cốt lõi:</strong></p>
+                    <div class="tag-list">
+                        <span class="tag">Kiến trúc máy tính & Vi xử lý</span>
+                        <span class="tag">Lập trình C/C++ vi điều khiển (Arduino/ESP32)</span>
+                        <span class="tag">Hệ điều hành thời gian thực (RTOS)</span>
+                        <span class="tag">Điện tử số & Giao tiếp ngoại vi (SPI, I2C, UART)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: KỸ NĂNG NỀN TẢNG -->
+        <div id="skills" class="tab-content">
+            <div class="info-box">
+                <h4>Bộ Kỹ Năng Sống Cần Thiết Cho Học Sinh THPT</h4>
+                <p>Trước khi bước chân vào chuyên ngành, bạn cần chuẩn bị sẵn sàng các nền tảng tư duy cốt lõi sau:</p>
+            </div>
+
+            <div class="grid-3">
+                <div class="card">
+                    <h3>🧠 Tư Duy Logic & Thuật Toán</h3>
+                    <p>Khả năng phân tích bài toán thành các bước nhỏ, tối ưu hóa hiệu năng giải quyết vấn đề.</p>
+                    <div class="tag-list">
+                        <span class="tag">Ngôn ngữ C++ nền tảng</span>
+                        <span class="tag">Luyện tập trên LQDOJ / Codeforces</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>🌐 Trình Độ Tiếng Anh</h3>
+                    <p>Tiếng Anh là ngôn ngữ chính của công nghệ. Đọc tài liệu kỹ thuật (Documentation) và StackOverflow.</p>
+                    <div class="tag-list">
+                        <span class="tag">Mục tiêu IELTS 6.5+</span>
+                        <span class="tag">Tiếng Anh chuyên ngành IT</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>📚 Khả Năng Tự Học (Self-Learning)</h3>
+                    <p>Công nghệ thay đổi từng ngày, trường đại học chỉ dạy nền tảng, 80% kiến thức chuyên môn do tự học.</p>
+                    <div class="tag-list">
+                        <span class="tag">Nghiên cứu tài liệu quốc tế</span>
+                        <span class="tag">Thực hành qua dự án cá nhân</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: CƠ SỞ ĐÀO TẠO & XÉT TUYỂN -->
+        <div id="university" class="tab-content">
+            <div class="info-box">
+                <h4>Định Hướng Thi Cử & Các Trường Đại Học Trọng Điểm</h4>
+                <p>Tổng hợp các cơ sở đào tạo khối ngành Công nghệ thông tin hàng đầu cùng các tổ hợp môn xét tuyển phổ biến:</p>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3>🏛️ Các Trường Đại Học Hàng Đầu (Khu Vực Phía Nam)</h3>
+                    <ul class="styled-list">
+                        <li><strong>ĐH Công Nghệ Thông Tin - ĐHQG TP.HCM (UIT):</strong> Chuyên sâu toàn diện về mọi lĩnh vực CNTT & An toàn thông tin.</li>
+                        <li><strong>ĐH Bách Khoa - ĐHQG TP.HCM (HCMUT):</strong> Đào tạo kỹ sư đỉnh cao, nền tảng toán học và kỹ thuật cực kỳ vững chắc.</li>
+                        <li><strong>ĐH Khoa Học Tự Nhiên - ĐHQG TP.HCM (HCMUS):</strong> Thế mạnh về Khoa học dữ liệu, AI và thuật toán.</li>
+                        <li><strong>ĐH Sư Phạm Kỹ Thuật (HCMUTE) & ĐH FPT:</strong> Môi trường thực chiến, chương trình cập nhật sát doanh nghiệp.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>📝 Tổ Hợp Môn & Phương Thức Xét Tuyển</h3>
+                    <p>Các tổ hợp môn truyền thống xét tuyển khối ngành CNTT:</p>
+                    <div class="tag-list" style="margin-bottom: 16px;">
+                        <span class="tag">A00 (Toán - Lý - Hóa)</span>
+                        <span class="tag">A01 (Toán - Lý - Anh)</span>
+                        <span class="tag">D01 (Toán - Văn - Anh)</span>
+                        <span class="tag">D07 (Toán - Hóa - Anh)</span>
+                    </div>
+                    <p><strong>Phương thức xét tuyển kết hợp hiện đại:</strong></p>
+                    <ul class="styled-list">
+                        <li>Điểm thi tốt nghiệp THPT kết hợp chứng chỉ quốc tế (IELTS).</li>
+                        <li>Điểm kỳ thi **Đánh giá năng lực (ĐGNL)** do ĐHQG tổ chức (chiếm tỷ trọng chỉ tiêu lớn tại UIT, Bách Khoa, KHTN).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Báo Cáo Chuyên Sâu Ngành Công Nghệ Thông Tin | Thiết kế trực quan phục vụ thuyết trình học tập.</p>
+    </footer>
+
+    <script>
+        function switchTab(tabId, event) {
+            // Ẩn tất cả các tab content
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(c => c.classList.remove('active'));
+
+            // Bỏ active tất cả các nút
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+
+            // Hiển thị tab được chọn
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
